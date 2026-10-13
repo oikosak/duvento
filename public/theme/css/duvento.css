@@ -1926,3 +1926,6 @@ html {
 .brand-mark::before,
 .brand-mark::after { display: none !important; }
 .brand:hover .brand-mark { transform: none; box-shadow: none !important; }
+
+/* Landing header: brand text was white on the light background */
+.landing-top .brand { color: var(--ny-heading); }

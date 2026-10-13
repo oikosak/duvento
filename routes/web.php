@@ -41,8 +41,6 @@ use Illuminate\Support\Facades\Route;
 require __DIR__.'/install.php';
 
 Route::get('/', function () {
-    app()->setLocale('en');
-
     return view('welcome', [
         'assets' => LandingPreview::assets(),
         'edition' => Edition::current(),

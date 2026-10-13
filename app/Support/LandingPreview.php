@@ -10,10 +10,10 @@ final class LandingPreview
     public static function assets(): Collection
     {
         return collect([
-            self::item('nordic-atelier.ru', 'Nordic Atelier', __('app.asset_types.ssl'), 4, AssetStatus::Critical),
-            self::item('nordic-atelier.ru', 'Nordic Atelier', __('app.asset_types.domain'), 12, AssetStatus::Urgent),
-            self::item('Yoast SEO Premium', 'Nordic Atelier', __('app.asset_types.plugin_license'), 22, AssetStatus::Upcoming),
-            self::item('Business insurance', 'Quiet Bakery', 'Insurance', 45, AssetStatus::Ok),
+            self::item(__('app.landing.demo.site'), __('app.landing.demo.client_a'), __('app.asset_types.ssl'), 4, AssetStatus::Critical),
+            self::item(__('app.landing.demo.site'), __('app.landing.demo.client_a'), __('app.asset_types.domain'), 12, AssetStatus::Urgent),
+            self::item('Yoast SEO Premium', __('app.landing.demo.client_a'), __('app.asset_types.plugin_license'), 22, AssetStatus::Upcoming),
+            self::item(__('app.landing.demo.insurance'), __('app.landing.demo.client_b'), __('app.landing.demo.insurance_type'), 45, AssetStatus::Ok),
         ]);
     }
 
