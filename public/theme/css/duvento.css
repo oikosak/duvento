@@ -1930,5 +1930,29 @@ html {
 /* Landing header: brand text was white on the light background */
 .landing-top .brand { color: var(--ny-heading); }
 
-/* Landing without hero: cards sit right under the header */
-.landing-top + .portal-section { border-top: 0; padding-top: 3rem; }
+/* Landing without hero: header on top, cards centred vertically, footer at the bottom */
+.landing-page {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+.landing-page > .container {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+.landing-top + .portal-section {
+  border-top: 0;
+  margin: auto 0;
+  padding: 2rem 0;
+}
+/* Keep the theme toggle out of the page flow so it never pushes the page down */
+body > .auth-theme-toggle {
+  position: fixed !important;
+  top: 1.15rem;
+  right: 1.15rem;
+  left: auto;
+  z-index: 30;
+}
