@@ -411,9 +411,8 @@ class AdminOpsTest extends TestCase
 
         $this->post(route('logout'));
 
-        Livewire::test(Register::class)
-            ->set('inviteToken', $invite->token)
-            ->set('email', 'mate@studio.test')
+        Livewire::withQueryParams(['invite' => $invite->token])
+            ->test(Register::class)
             ->set('name', 'Напарник')
             ->set('password', 'password12')
             ->set('password_confirmation', 'password12')
