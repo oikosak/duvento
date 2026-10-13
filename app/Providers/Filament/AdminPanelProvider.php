@@ -38,15 +38,15 @@ class AdminPanelProvider extends PanelProvider
             ->path(AdminPath::prefix())
             ->login()
             ->authGuard('admin')
-            ->brandName('Duvento')
+            ->brandName(fn (): string => __('app.brand'))
             ->favicon(asset('theme/images/logo.svg'))
             ->brandLogo(fn (): HtmlString => new HtmlString(
-                '<span class="brand"><span class="brand-mark">D</span><span class="brand-text">Duvento</span></span>'
+                '<span class="brand"><span class="brand-mark">D</span><span class="brand-text">'.e(__('app.brand')).'</span></span>'
             ))
             ->brandLogoHeight('38px')
             ->font('Inter', asset('theme/css/fonts.css'), LocalFontProvider::class)
             ->colors([
-                'primary' => Color::hex('#007257'),
+                'primary' => Color::hex('#4f7f22'),
             ])
             ->darkMode()
             ->defaultThemeMode(ThemeMode::Light)

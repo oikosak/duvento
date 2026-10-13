@@ -4,7 +4,7 @@
             <header class="landing-top">
                 <a href="{{ url('/') }}" class="brand" aria-label="Duvento home">
                     <span class="brand-mark">D</span>
-                    <span class="brand-text">Duvento</span>
+                    <span class="brand-text">{{ __('app.brand') }}</span>
                 </a>
 
                 <nav class="landing-nav" aria-label="Portal navigation">

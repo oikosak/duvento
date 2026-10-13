@@ -53,9 +53,9 @@
 <div class="app">
     <header class="topbar">
         <div class="topbar-brandzone">
-            <a href="{{ $homeUrl }}" class="brand" wire:navigate aria-label="Duvento">
+            <a href="{{ $homeUrl }}" class="brand" wire:navigate aria-label="{{ __('app.brand') }}">
                 <span class="brand-mark">D</span>
-                <span class="brand-text">Duvento</span>
+                <span class="brand-text">{{ __('app.brand') }}</span>
             </a>
         </div>
         <div class="topbar-inner">
@@ -197,7 +197,7 @@
         <div class="sidebar-header">
             <a href="{{ $homeUrl }}" class="brand" wire:navigate>
                 <span class="brand-mark">D</span>
-                <span class="brand-text">Duvento</span>
+                <span class="brand-text">{{ __('app.brand') }}</span>
             </a>
         </div>
         <div class="sidebar-inner">
@@ -223,7 +223,7 @@
         </main>
         <footer class="app-footer">
             <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
-                <div>© {{ date('Y') }} <strong class="text-gradient">Duvento</strong></div>
+                <div>© {{ date('Y') }} <strong class="text-gradient">{{ __('app.brand') }}</strong></div>
             </div>
         </footer>
     </div>

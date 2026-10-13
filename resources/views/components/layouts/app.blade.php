@@ -43,7 +43,7 @@
         <div class="topbar-brandzone">
             <a href="{{ route('dashboard') }}" class="brand" wire:navigate aria-label="{{ __('app.brand') }}">
                 <span class="brand-mark">D</span>
-                <span class="brand-text">Duvento</span>
+                <span class="brand-text">{{ __('app.brand') }}</span>
             </a>
         </div>
         <div class="topbar-inner">
@@ -206,7 +206,7 @@
         <div class="sidebar-header">
             <a href="{{ route('dashboard') }}" class="brand" wire:navigate>
                 <span class="brand-mark">D</span>
-                <span class="brand-text">Duvento</span>
+                <span class="brand-text">{{ __('app.brand') }}</span>
             </a>
         </div>
         <div class="sidebar-inner">

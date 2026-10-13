@@ -22,7 +22,7 @@
     mode: 'light',          // light | dark | system
     layout: 'boxed',        // vertical | mini | horizontal | boxed
     sidebarMini: false,
-    primary: '#007257',
+    primary: '#4f7f22',
     direction: 'ltr'        // ltr | rtl
   };
 
@@ -72,10 +72,10 @@
         merged.layout = 'boxed';
         merged.duventoLayout = 1;
       }
-      if (merged.primary !== '#007257') {
-        merged.primary = '#007257';
+      if (merged.primary !== '#4f7f22') {
+        merged.primary = '#4f7f22';
       }
-      if (stored.duventoLayout !== 1 || stored.primary !== '#007257') {
+      if (stored.duventoLayout !== 1 || stored.primary !== '#4f7f22') {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
       }
       return merged;
@@ -118,10 +118,10 @@
     }, 80);
 
     // Primary color (with light/dark shading)
-    html.style.setProperty('--ny-primary', '#007257');
-    html.style.setProperty('--ny-primary-2', '#00a87a');
-    html.style.setProperty('--ny-primary-rgb', '0,114,87');
-    html.style.setProperty('--ny-grad-primary', 'linear-gradient(135deg, #00a87a 0%, #007257 100%)');
+    html.style.setProperty('--ny-primary', '#4f7f22');
+    html.style.setProperty('--ny-primary-2', '#6a9f35');
+    html.style.setProperty('--ny-primary-rgb', '79, 127, 34');
+    html.style.setProperty('--ny-grad-primary', 'linear-gradient(135deg, #6a9f35 0%, #4f7f22 100%)');
 
     if (cfg.layout === 'horizontal') {
       body.classList.remove('sidebar-mini', 'layout-boxed');

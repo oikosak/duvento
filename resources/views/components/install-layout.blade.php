@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Установка Duvento</title>
     <style>
-        :root { color-scheme: light; --green:#007257; --ink:#172321; --muted:#63706d; --line:#dce5e2; --bg:#f2f6f5; }
+        :root { color-scheme: light; --green:#4f7f22; --ink:#172321; --muted:#63706d; --line:#dce5e2; --bg:#f2f6f5; }
         * { box-sizing:border-box; }
         body { margin:0; min-height:100vh; display:grid; place-items:center; padding:24px; background:var(--bg); color:var(--ink); font:15px/1.5 Inter,system-ui,sans-serif; }
         .installer { width:min(720px,100%); background:#fff; border:1px solid var(--line); border-radius:20px; box-shadow:0 18px 60px rgba(23,35,33,.09); overflow:hidden; }
@@ -23,7 +23,7 @@
         p.lead { margin:0 0 26px; color:var(--muted); }
         label { display:block; margin:0 0 16px; font-weight:650; }
         input, select { width:100%; margin-top:7px; padding:12px 13px; border:1px solid #cbd7d3; border-radius:10px; font:inherit; background:#fff; }
-        input:focus, select:focus { outline:3px solid rgba(0,114,87,.13); border-color:var(--green); }
+        input:focus, select:focus { outline:3px solid rgba(79, 127, 34,.13); border-color:var(--green); }
         .grid { display:grid; grid-template-columns:1fr 1fr; gap:0 16px; }
         .actions { display:flex; justify-content:flex-end; gap:10px; margin-top:26px; }
         button,.button { border:0; border-radius:10px; padding:12px 20px; background:var(--green); color:#fff; font:inherit; font-weight:700; cursor:pointer; text-decoration:none; }
