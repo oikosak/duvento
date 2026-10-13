@@ -24,9 +24,6 @@
             <button type="submit" class="btn btn-primary w-100 mb-3">
                 <i class="mdi mdi-login me-1"></i>{{ __('app.auth.login') }}
             </button>
-            <p class="text-center small mb-0 text-muted">
-                {{ __('app.auth.no_account') }} <a href="{{ route('register') }}" class="text-primary fw-semibold" wire:navigate>{{ __('app.auth.register') }}</a>
-            </p>
         </form>
     </div>
 </div>

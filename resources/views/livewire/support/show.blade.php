@@ -35,7 +35,7 @@
                     <div class="support-message">
                         <div class="support-message-author">
                             {{ $message->authorName() }}
-                            <span>{{ $message->created_at->format('d.m.Y H:i') }}</span>
+                            <span>{{ \App\Support\DisplayDate::dateTime($message->created_at) }}</span>
                         </div>
                         <div class="support-message-body">{!! nl2br(e($message->body)) !!}</div>
                         @foreach ($message->attachments as $attachment)

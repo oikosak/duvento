@@ -82,7 +82,7 @@
                         <tr>
                             <td>{{ $invite->email }}</td>
                             <td>{{ $invite->role->label() }}</td>
-                            <td>{{ $invite->expires_at?->toDateString() }}</td>
+                            <td>{{ \App\Support\DisplayDate::date($invite->expires_at) }}</td>
                             <td class="text-end">
                                 <x-ui.button variant="danger" type="button" wire:click="revoke({{ $invite->id }})">{{ __('app.team.revoke') }}</x-ui.button>
                             </td>

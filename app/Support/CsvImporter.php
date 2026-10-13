@@ -62,6 +62,7 @@ final class CsvImporter
                 'asset_type_id' => $type->id,
                 'name' => mb_substr($name, 0, 255),
                 'expires_at' => $this->nullable($row['expires_at'] ?? $row['истекает'] ?? null),
+                'renewal_months' => $this->renewalMonths($row['renewal_months'] ?? null),
                 'owner' => $this->enum($row['owner'] ?? $row['владелец'] ?? null, ['agency', 'client', 'unknown'], 'unknown'),
                 'payer' => $this->enum($row['payer'] ?? $row['плательщик'] ?? null, ['agency', 'client', 'unknown'], 'unknown'),
                 'auto_renew' => $this->enum($row['auto_renew'] ?? $row['автопродление'] ?? null, ['yes', 'no', 'unknown'], 'unknown'),
@@ -76,6 +77,13 @@ final class CsvImporter
         }
 
         return $created;
+    }
+
+    private function renewalMonths(mixed $value): int
+    {
+        $months = (int) trim((string) $value);
+
+        return in_array($months, \App\Models\Asset::RENEWAL_PERIODS, true) ? $months : 12;
     }
 
     private function rows(UploadedFile $file): array

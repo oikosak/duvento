@@ -23,7 +23,7 @@
                 <dd class="col-sm-9">{{ $record->assetType?->displayLabel() ?? __('admin.placeholders.empty') }}</dd>
 
                 <dt class="col-sm-3">{{ __('admin.fields.expires_at') }}</dt>
-                <dd class="col-sm-9">{{ $record->expires_at?->toDateString() ?? __('admin.placeholders.empty') }}</dd>
+                <dd class="col-sm-9">{{ \App\Support\DisplayDate::date($record->expires_at) ?? __('admin.placeholders.empty') }}</dd>
 
                 <dt class="col-sm-3">{{ __('admin.fields.status') }}</dt>
                 <dd class="col-sm-9">

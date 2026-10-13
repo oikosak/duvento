@@ -72,7 +72,7 @@
                                 <a href="{{ route('assets.show', $asset) }}" class="fw-semibold text-decoration-none" wire:navigate>{{ $asset->name }}</a>
                             </td>
                             <td class="text-muted">{{ $asset->assetType?->displayLabel() }}</td>
-                            <td><code>{{ $asset->expires_at?->toDateString() ?? __('app.common.empty') }}</code></td>
+                            <td><code>{{ \App\Support\DisplayDate::date($asset->expires_at) ?? __('app.common.empty') }}</code></td>
                             <td>{{ $asset->days_left === null ? __('app.common.empty') : $asset->days_left }}</td>
                             <td>
                                 <span class="{{ $asset->status->badgeClass() }}">{{ $asset->status->label() }}</span>
@@ -119,7 +119,7 @@
                 <div class="list-group-item">
                     <div class="fw-semibold">{{ __('app.activity.actions.'.$log->action) }}</div>
                     <div class="small text-muted">
-                        <code>{{ $log->created_at->format('Y-m-d H:i') }}</code>
+                        <code>{{ \App\Support\DisplayDate::dateTime($log->created_at) }}</code>
                         · {{ $log->user?->name ?? __('app.common.system') }}
                         @if (! empty($log->properties['name']))
                             · {{ $log->properties['name'] }}

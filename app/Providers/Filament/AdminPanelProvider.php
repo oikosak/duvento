@@ -64,7 +64,9 @@ class AdminPanelProvider extends PanelProvider
                     abort_unless(AppLocale::isSupported($locale), 404);
                     session(['admin_locale' => $locale]);
 
-                    return redirect()->back(fallback: url(AdminPath::url()));
+                    return redirect()
+                        ->back(fallback: url(AdminPath::url()))
+                        ->cookie('duvento-admin-locale', $locale, 60 * 24 * 365);
                 })->name('locale');
             })
             ->renderHook(

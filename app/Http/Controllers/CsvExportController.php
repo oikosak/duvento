@@ -27,12 +27,13 @@ class CsvExportController extends Controller
         );
 
         return CsvDownload::stream('duvento-assets-'.now()->format('Y-m-d').'.csv', [
-            'Name', 'Type', 'Client', 'Expires at', 'Days left', 'Status', 'Owner', 'Payer', 'Auto renew', 'Notice email', 'Renewal cost', 'Currency',
+            'Name', 'Type', 'Client', 'Expires at', 'Renewal months', 'Days left', 'Status', 'Owner', 'Payer', 'Auto renew', 'Notice email', 'Renewal cost', 'Currency',
         ], $assets->map(fn ($asset) => [
             $asset->name,
             $asset->assetType?->displayLabel(),
             $asset->client?->name,
             $asset->expires_at?->toDateString(),
+            $asset->renewal_months,
             $asset->days_left,
             $asset->status->label(),
             $asset->owner->value,
@@ -84,7 +85,7 @@ class CsvExportController extends Controller
     public function assetsTemplate(): StreamedResponse
     {
         return CsvDownload::stream('duvento-assets-template.csv', [
-            'name', 'type', 'client', 'expires_at', 'owner', 'payer', 'auto_renew', 'notice_email', 'ssl_check', 'notes', 'renewal_cost', 'currency',
+            'name', 'type', 'client', 'expires_at', 'renewal_months', 'owner', 'payer', 'auto_renew', 'notice_email', 'ssl_check', 'notes', 'renewal_cost', 'currency',
         ], []);
     }
 

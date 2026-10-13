@@ -48,7 +48,7 @@
                                 </a>
                             </td>
                             <td>{{ $asset->assetType?->displayLabel() ?? __('admin.placeholders.empty') }}</td>
-                            <td>{{ $asset->expires_at?->toDateString() ?? __('admin.placeholders.empty') }}</td>
+                            <td>{{ \App\Support\DisplayDate::date($asset->expires_at) ?? __('admin.placeholders.empty') }}</td>
                         </tr>
                     @empty
                         <tr>

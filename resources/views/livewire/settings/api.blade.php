@@ -17,7 +17,7 @@
         <div class="list-group list-group-flush">
             @forelse ($tokens as $token)
                 <div class="list-group-item d-flex justify-content-between align-items-center gap-3">
-                    <span>{{ $token->name }} <code class="text-muted">{{ $token->created_at->toDateString() }}</code></span>
+                    <span>{{ $token->name }} <code class="text-muted">{{ \App\Support\DisplayDate::date($token->created_at) }}</code></span>
                     <x-ui.button variant="danger" icon="trash-can-outline" :tip="__('app.common.delete')" wire:click="deleteToken({{ $token->id }})" />
                 </div>
             @empty

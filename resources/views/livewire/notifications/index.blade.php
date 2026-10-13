@@ -16,13 +16,13 @@
                             <a href="{{ $item['url'] }}" class="min-w-0 flex-grow-1 text-decoration-none" wire:navigate>
                                 <p class="mb-1 fw-semibold text-body">{{ $item['title'] }}</p>
                                 @if ($item['body']) <p class="mb-1 small text-muted text-truncate">{{ $item['body'] }}</p> @endif
-                                <code class="small">{{ $item['created_at']->format('Y-m-d H:i') }}</code>
+                                <code class="small">{{ \App\Support\DisplayDate::dateTime($item['created_at']) }}</code>
                             </a>
                         @else
                             <div class="min-w-0 flex-grow-1">
                                 <p class="mb-1 fw-semibold">{{ $item['title'] }}</p>
                                 @if ($item['body']) <p class="mb-1 small text-muted text-truncate">{{ $item['body'] }}</p> @endif
-                                <code class="small">{{ $item['created_at']->format('Y-m-d H:i') }}</code>
+                                <code class="small">{{ \App\Support\DisplayDate::dateTime($item['created_at']) }}</code>
                             </div>
                         @endif
                         <div class="table-row-actions flex-shrink-0">

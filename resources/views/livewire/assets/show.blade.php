@@ -28,8 +28,9 @@
             <div class="card h-100">
                 <div class="card-body">
                     <div class="stat-label">{{ __('app.fields.expires') }}</div>
-                    <div class="fw-semibold">{{ $asset->expires_at?->toDateString() ?? __('app.common.empty') }}</div>
+                    <div class="fw-semibold">{{ \App\Support\DisplayDate::date($asset->expires_at) ?? __('app.common.empty') }}</div>
                     <div class="small text-muted">{{ $expiryHint }}</div>
+                    <div class="small text-muted">{{ __('app.assets.renews_every', ['period' => \App\Models\Asset::renewalPeriodLabel($asset->renewal_months ?: 12)]) }}</div>
                 </div>
             </div>
         </div>
@@ -95,7 +96,7 @@
                 @if ($asset->ssl_check_enabled)
                     <div class="col-md-6">
                         <div class="small text-muted mb-1">{{ __('app.assets.last_checked') }}</div>
-                        <div>{{ $asset->last_checked_at?->format('Y-m-d H:i') ?? __('app.assets.never_checked') }}</div>
+                        <div>{{ \App\Support\DisplayDate::dateTime($asset->last_checked_at) ?? __('app.assets.never_checked') }}</div>
                     </div>
                 @endif
                 <div class="col-12">
@@ -113,7 +114,7 @@
                 <div class="list-group-item">
                     <div class="fw-semibold">{{ __('app.activity.actions.'.$log->action) }}</div>
                     <div class="small text-muted">
-                        <code>{{ $log->created_at->format('Y-m-d H:i') }}</code>
+                        <code>{{ \App\Support\DisplayDate::dateTime($log->created_at) }}</code>
                         · {{ $log->user?->name ?? __('app.common.system') }}
                         @if (! empty($log->properties['from']) || ! empty($log->properties['to']))
                             · {{ $log->properties['from'] ?? '—' }} → {{ $log->properties['to'] ?? '—' }}
@@ -149,6 +150,9 @@
             <p class="mb-3">{{ __('app.assets.renew_short', ['name' => $asset->name]) }}</p>
             <x-ui.input :label="__('app.fields.expires')" type="date" wire:model="renewDate" />
             @error('renewDate') <div class="invalid-feedback d-block mt-n3 mb-3">{{ $message }}</div> @enderror
+            @if ($renewPeriod !== '')
+                <p class="small text-muted mt-n2 mb-3">{{ __('app.assets.renew_period_hint', ['period' => $renewPeriod]) }}</p>
+            @endif
             <div class="d-flex justify-content-end gap-2">
                 <x-ui.button type="button" wire:click="close">{{ __('app.common.cancel') }}</x-ui.button>
                 <x-ui.button variant="accent" type="submit">{{ __('app.assets.renew') }}</x-ui.button>

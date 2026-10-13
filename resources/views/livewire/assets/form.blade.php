@@ -77,11 +77,19 @@
                             @endforeach
                         </x-ui.select>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                        <x-ui.select :label="__('app.fields.renewal_period')" wire:model="renewalMonths">
+                            @foreach (\App\Models\Asset::RENEWAL_PERIODS as $months)
+                                <option value="{{ $months }}">{{ \App\Models\Asset::renewalPeriodLabel($months) }}</option>
+                            @endforeach
+                        </x-ui.select>
+                        @error('renewalMonths') <div class="invalid-feedback d-block mt-n3 mb-0">{{ $message }}</div> @enderror
+                    </div>
+                    <div class="col-md-4">
                         <x-ui.input :label="__('app.fields.renewal_cost')" type="number" min="0" step="0.01" wire:model="renewalCost" />
                         @error('renewalCost') <div class="invalid-feedback d-block mt-n3 mb-0">{{ $message }}</div> @enderror
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <x-ui.select :label="__('app.fields.currency')" wire:model="currency">
                             @foreach (\App\Support\UpcomingPayments::CURRENCIES as $code)
                                 <option value="{{ $code }}">{{ $code }}</option>

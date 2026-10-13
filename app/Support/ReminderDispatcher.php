@@ -133,7 +133,7 @@ final class ReminderDispatcher
             __('app.mail.expiring_line', [
                 'name' => $asset->name,
                 'type' => $asset->assetType?->displayLabel(),
-                'date' => $asset->expires_at?->toDateString(),
+                'date' => DisplayDate::date($asset->expires_at),
             ]),
             __('app.mail.expiring_client', ['client' => $asset->client?->name ?? __('app.common.empty')]),
             __('app.mail.expiring_days', ['days' => $days]),

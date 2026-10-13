@@ -243,7 +243,7 @@
                                 @endif
                             </td>
                             <td class="text-muted">{{ $asset->assetType?->displayLabel() }}</td>
-                            <td><code>{{ $asset->expires_at?->toDateString() ?? __('app.common.empty') }}</code></td>
+                            <td><code>{{ \App\Support\DisplayDate::date($asset->expires_at) ?? __('app.common.empty') }}</code></td>
                             @if ($cashflowOpen)
                                 <td class="text-muted">
                                     {{ $asset->renewal_cost === null

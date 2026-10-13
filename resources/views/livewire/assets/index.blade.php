@@ -88,7 +88,7 @@
                             <td><span class="countdown-days">{{ $asset->days_left === null ? __('app.common.empty') : $asset->days_left }}</span></td>
                             <td>
                                 <a href="{{ route('assets.show', $asset) }}" class="fw-semibold text-decoration-none" wire:navigate>{{ $asset->name }}</a>
-                                <div class="small text-muted">{{ $asset->expires_at?->toDateString() ?? __('app.assets.no_date') }}</div>
+                                <div class="small text-muted">{{ \App\Support\DisplayDate::date($asset->expires_at) ?? __('app.assets.no_date') }}</div>
                             </td>
                             <td>
                                 @if ($asset->client)
@@ -141,6 +141,9 @@
             <p class="mb-3">{{ __('app.assets.renew_hint', ['name' => $renewingName]) }}</p>
             <x-ui.input :label="__('app.fields.expires')" type="date" wire:model="renewDate" />
             @error('renewDate') <div class="invalid-feedback d-block mt-n3 mb-3">{{ $message }}</div> @enderror
+            @if ($renewPeriod !== '')
+                <p class="small text-muted mt-n2 mb-3">{{ __('app.assets.renew_period_hint', ['period' => $renewPeriod]) }}</p>
+            @endif
             <div class="d-flex justify-content-end gap-2">
                 <x-ui.button type="button" wire:click="close">{{ __('app.common.cancel') }}</x-ui.button>
                 <x-ui.button variant="accent" type="submit">{{ __('app.assets.renew') }}</x-ui.button>

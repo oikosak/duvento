@@ -29,7 +29,7 @@
                         <div class="min-w-0">
                             <p class="mb-1 fw-semibold">{{ __('app.activity.actions')[$log->action] ?? $log->action }}</p>
                             <p class="mb-0 small text-muted">
-                                <code>{{ $log->created_at->format('Y-m-d H:i') }}</code>
+                                <code>{{ \App\Support\DisplayDate::dateTime($log->created_at) }}</code>
                                 · {{ $log->user?->name ?? __('app.common.system') }}
                                 @if (!empty($log->properties['name']))
                                     · {{ $log->properties['name'] }}
@@ -41,7 +41,7 @@
                                     · {{ $log->properties['email'] }}
                                 @endif
                                 @if (!empty($log->properties['from']) || !empty($log->properties['to']))
-                                    · {{ $log->properties['from'] ?? __('app.common.empty') }} → {{ $log->properties['to'] ?? __('app.common.empty') }}
+                                    · {{ \App\Support\DisplayDate::date($log->properties['from'] ?? null) ?? __('app.common.empty') }} → {{ \App\Support\DisplayDate::date($log->properties['to'] ?? null) ?? __('app.common.empty') }}
                                 @endif
                                 @if (!empty($log->properties['days']) && is_array($log->properties['days']))
                                     · {{ __('app.activity.days', ['days' => implode(', ', $log->properties['days'])]) }}

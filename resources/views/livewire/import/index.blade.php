@@ -24,7 +24,7 @@
                     <p class="small text-muted">{{ __('app.import.hint_clients', ['cols' => 'name, contact, email, website, notes', 'ru' => 'имя, контакт, почта, сайт, заметки']) }}</p>
                 @else
                     <p class="small text-muted">
-                        {{ __('app.import.hint_assets', ['cols' => 'name, type, client, expires_at, owner, payer, auto_renew, notice_email, ssl_check, notes, renewal_cost, currency', 'client_id' => 'client_id', 'ssl' => 'ssl', 'domain' => 'domain']) }}
+                        {{ __('app.import.hint_assets', ['cols' => 'name, type, client, expires_at, renewal_months, owner, payer, auto_renew, notice_email, ssl_check, notes, renewal_cost, currency', 'client_id' => 'client_id', 'ssl' => 'ssl', 'domain' => 'domain']) }}
                     </p>
                 @endif
 

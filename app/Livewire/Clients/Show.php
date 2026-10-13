@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Clients;
 
+use App\Models\Asset;
 use App\Enums\AssetOwner;
 use App\Enums\AssetPayer;
 use App\Enums\AssetStatus;
@@ -43,6 +44,8 @@ class Show extends Component
     public string $renewingName = '';
 
     public string $renewDate = '';
+
+    public string $renewPeriod = '';
 
     public int $cashflowDays = 30;
 
@@ -101,7 +104,8 @@ class Show extends Component
         $asset = $this->asset($id);
         $this->renewingId = $asset->id;
         $this->renewingName = $asset->name;
-        $this->renewDate = ($asset->expires_at ?? now())->copy()->addYear()->toDateString();
+        $this->renewDate = $asset->nextRenewalDate()->toDateString();
+        $this->renewPeriod = Asset::renewalPeriodLabel($asset->renewal_months ?: 12);
         $this->showRenew = true;
     }
 

@@ -31,15 +31,12 @@ class Register extends Component
     {
         $token = request('invite') ?? session('invite_token');
 
-        if (! is_string($token) || $token === '') {
-            return;
-        }
+        // Public sign-up is disabled: only a valid pending invitation can open this page.
+        abort_unless(is_string($token) && $token !== '', 404);
 
         $invitation = WorkspaceInvitation::query()->where('token', $token)->pending()->first();
 
-        if ($invitation === null) {
-            return;
-        }
+        abort_if($invitation === null, 404);
 
         $this->inviteToken = $invitation->token;
         $this->email = $invitation->email;
@@ -48,6 +45,12 @@ class Register extends Component
 
     public function register(WorkspaceProvisioner $provisioner, WorkspaceInviter $inviter): void
     {
+        abort_unless(
+            $this->inviteToken !== null
+                && WorkspaceInvitation::query()->where('token', $this->inviteToken)->pending()->exists(),
+            404,
+        );
+
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:120'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],

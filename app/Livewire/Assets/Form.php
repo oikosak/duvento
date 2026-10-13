@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Assets;
 
+use App\Models\Asset;
 use App\Enums\ReminderChannel;
 use App\Livewire\Concerns\InteractsWithWorkspace;
 use App\Models\AssetType;
@@ -28,6 +29,8 @@ class Form extends Component
     public string $name = '';
 
     public string $expiresAt = '';
+
+    public int $renewalMonths = 12;
 
     public string $autoRenew = 'unknown';
 
@@ -56,6 +59,7 @@ class Form extends Component
             $this->assetTypeId = $model->asset_type_id;
             $this->name = $model->name;
             $this->expiresAt = $model->expires_at?->toDateString() ?? '';
+            $this->renewalMonths = $model->renewal_months ?: 12;
             $this->autoRenew = $model->auto_renew->value;
             $this->owner = $model->owner->value;
             $this->payer = $model->payer->value;
@@ -92,6 +96,7 @@ class Form extends Component
             'assetTypeId' => ['required', Rule::exists('asset_types', 'id')],
             'name' => ['required', 'string', 'max:255'],
             'expiresAt' => ['nullable', 'date'],
+            'renewalMonths' => ['required', 'integer', Rule::in(Asset::RENEWAL_PERIODS)],
             'autoRenew' => ['required', 'in:yes,no,unknown'],
             'owner' => ['required', 'in:agency,client,unknown'],
             'payer' => ['required', 'in:agency,client,unknown'],
@@ -111,6 +116,7 @@ class Form extends Component
             'asset_type_id' => $validated['assetTypeId'],
             'name' => $validated['name'],
             'expires_at' => $validated['expiresAt'] ?: null,
+            'renewal_months' => (int) $validated['renewalMonths'],
             'auto_renew' => $validated['autoRenew'],
             'owner' => $validated['owner'],
             'payer' => $validated['payer'],

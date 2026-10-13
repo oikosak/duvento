@@ -22,6 +22,7 @@ use Illuminate\Support\Collection;
     'asset_type_id',
     'name',
     'expires_at',
+    'renewal_months',
     'auto_renew',
     'owner',
     'payer',
@@ -40,6 +41,7 @@ class Asset extends Model
     {
         return [
             'expires_at' => 'date',
+            'renewal_months' => 'integer',
             'auto_renew' => AutoRenew::class,
             'owner' => AssetOwner::class,
             'payer' => AssetPayer::class,
@@ -47,6 +49,25 @@ class Asset extends Model
             'last_checked_at' => 'datetime',
             'renewal_cost' => 'decimal:2',
         ];
+    }
+
+    /** Allowed renewal periods, in months. */
+    public const RENEWAL_PERIODS = [1, 3, 6, 12, 24, 36, 60, 120];
+
+    /**
+     * Suggested new expiry date: current expiry (or today) plus the renewal period.
+     * addMonthsNoOverflow keeps e.g. 31 Jan + 1 month on 28/29 Feb.
+     */
+    public function nextRenewalDate(): \Illuminate\Support\Carbon
+    {
+        return ($this->expires_at ?? now())->copy()->addMonthsNoOverflow($this->renewal_months ?: 12);
+    }
+
+    public static function renewalPeriodLabel(int $months): string
+    {
+        return $months % 12 === 0
+            ? trans_choice('app.assets.period_years', intdiv($months, 12))
+            : trans_choice('app.assets.period_months', $months);
     }
 
     public function client(): BelongsTo

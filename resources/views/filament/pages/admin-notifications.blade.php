@@ -29,7 +29,7 @@
                                 <div class="small text-muted text-truncate">{{ $item['body'] }}</div>
                             @endif
                             <div class="small text-muted">
-                                {{ $item['meta'] }}@if ($item['meta']) · @endif{{ $item['created_at']->format('d.m.Y H:i') }}
+                                {{ $item['meta'] }}@if ($item['meta']) · @endif{{ \App\Support\DisplayDate::dateTime($item['created_at']) }}
                             </div>
                         </a>
                         <div class="table-row-actions flex-shrink-0">

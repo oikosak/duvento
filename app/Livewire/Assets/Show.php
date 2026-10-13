@@ -22,6 +22,8 @@ class Show extends Component
 
     public string $renewDate = '';
 
+    public string $renewPeriod = '';
+
     public function mount(int $asset): void
     {
         $this->assetId = $this->workspace()->assets()->findOrFail($asset)->id;
@@ -30,7 +32,8 @@ class Show extends Component
     public function beginRenew(): void
     {
         $asset = $this->asset();
-        $this->renewDate = ($asset->expires_at ?? now())->copy()->addYear()->toDateString();
+        $this->renewDate = $asset->nextRenewalDate()->toDateString();
+        $this->renewPeriod = Asset::renewalPeriodLabel($asset->renewal_months ?: 12);
         $this->showRenew = true;
     }
 

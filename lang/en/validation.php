@@ -250,6 +250,7 @@ return [
         'website' => 'website',
         'renewalCost' => 'renewal cost',
         'renewal_cost' => 'renewal cost',
+        'renewalMonths' => 'renewal period',
         'currency' => 'currency',
         'workspaceCurrency' => 'currency',
     ],

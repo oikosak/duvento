@@ -11,7 +11,8 @@ class SetAdminLocale
 {
     public function handle(Request $request, Closure $next): Response
     {
-        $locale = $request->session()->get('admin_locale');
+        $locale = $request->session()->get('admin_locale')
+            ?? $request->cookie('duvento-admin-locale');
 
         if (AppLocale::isSupported($locale)) {
             app()->setLocale($locale);

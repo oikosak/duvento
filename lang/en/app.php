@@ -2,6 +2,8 @@
 
 return [
     'brand' => 'Duvento',
+    'date_format' => 'Y-m-d',
+    'datetime_format' => 'Y-m-d H:i',
     'footer_tagline' => 'Agency deadlines under control.',
     'about' => 'About',
 
@@ -135,6 +137,7 @@ return [
         'override_days' => 'Custom reminder days (comma-separated)',
         'workspace' => 'Agency / workspace',
         'renewal_cost' => 'Renewal cost',
+        'renewal_period' => 'Renewal period',
         'currency' => 'Currency',
         'role' => 'Role',
     ],
@@ -351,6 +354,10 @@ return [
         'renew_title' => 'Renew asset',
         'renew_hint' => ':name — new expiry date. Activity log will get a “Marked as renewed” event, not an asset edit.',
         'renew_short' => ':name — new expiry date.',
+        'renew_period_hint' => 'Suggested: current expiry + :period.',
+        'renews_every' => 'Renews every :period',
+        'period_months' => '{1} :count month|[2,*] :count months',
+        'period_years' => '{1} :count year|[2,*] :count years',
         'system_types' => 'System',
         'custom_types' => 'Custom types',
         'no_type_owner' => 'Missing a type —',

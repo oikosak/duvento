@@ -16,6 +16,7 @@ final class AppLocale
             'es' => ['name' => 'Español', 'flag' => '🇪🇸'],
             'pl' => ['name' => 'Polski', 'flag' => '🇵🇱'],
             'en' => ['name' => 'English', 'flag' => '🇬🇧'],
+            'el' => ['name' => 'Ελληνικά', 'flag' => '🇬🇷'],
         ];
     }
 

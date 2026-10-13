@@ -130,7 +130,7 @@
                                     <span class="notif-ic bg-primary-soft"><i class="mdi mdi-lifebuoy"></i></span>
                                     <div class="notif-meta">
                                         <div><strong>{{ $ticket->subject }}</strong></div>
-                                        <small>{{ $ticket->workspace?->name }} · {{ $ticket->user?->name }} · {{ $ticket->last_message_at?->format('Y-m-d H:i') }}</small>
+                                        <small>{{ $ticket->workspace?->name }} · {{ $ticket->user?->name }} · {{ \App\Support\DisplayDate::dateTime($ticket->last_message_at) }}</small>
                                     </div>
                                 </a>
                             @endforeach
@@ -139,7 +139,7 @@
                                     <span class="notif-ic bg-primary-soft"><i class="mdi mdi-bell-outline"></i></span>
                                     <div class="notif-meta">
                                         <div><strong>{{ $alert->properties['name'] ?? $alert->action }}</strong></div>
-                                        <small>{{ $alert->workspace?->name }} · {{ $alert->created_at->format('Y-m-d H:i') }}</small>
+                                        <small>{{ $alert->workspace?->name }} · {{ \App\Support\DisplayDate::dateTime($alert->created_at) }}</small>
                                     </div>
                                 </a>
                             @empty

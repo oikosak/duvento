@@ -117,7 +117,7 @@
                                     <span class="notif-ic bg-primary-soft"><i class="mdi mdi-lifebuoy"></i></span>
                                     <div class="notif-meta">
                                         <div><strong>{{ $ticket->subject }}</strong></div>
-                                        <small>{{ __('app.support.admin_replied') }} · {{ $ticket->last_message_at?->format('Y-m-d H:i') }}</small>
+                                        <small>{{ __('app.support.admin_replied') }} · {{ \App\Support\DisplayDate::dateTime($ticket->last_message_at) }}</small>
                                     </div>
                                 </a>
                             @endforeach
@@ -126,7 +126,7 @@
                                     <span class="notif-ic bg-primary-soft"><i class="mdi mdi-bell-outline"></i></span>
                                     <div class="notif-meta">
                                         <div><strong>{{ $alert->properties['name'] ?? $alert->action }}</strong></div>
-                                        <small>{{ $alert->created_at->format('Y-m-d H:i') }}</small>
+                                        <small>{{ \App\Support\DisplayDate::dateTime($alert->created_at) }}</small>
                                     </div>
                                 </a>
                             @empty
@@ -240,7 +240,7 @@
             @elseif (\App\Support\Edition::isCloud() && $workspace?->plan === \App\Enums\WorkspacePlan::FreeTrial && $workspace->trialEndsAt())
                 <div class="alert alert-warning d-flex align-items-center gap-2" role="alert">
                     <i class="mdi mdi-clock-outline fs-5"></i>
-                    <div>{{ __('app.header.trial_until') }} <strong>{{ $workspace->trialEndsAt()->toDateString() }}</strong>.@if ($isOwner) <a href="{{ route('settings.billing') }}" class="alert-link" wire:navigate>{{ __('app.header.cloud_plans') }}</a>@endif</div>
+                    <div>{{ __('app.header.trial_until') }} <strong>{{ \App\Support\DisplayDate::date($workspace->trialEndsAt()) }}</strong>.@if ($isOwner) <a href="{{ route('settings.billing') }}" class="alert-link" wire:navigate>{{ __('app.header.cloud_plans') }}</a>@endif</div>
                 </div>
             @endif
             {{ $slot }}

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Assets;
 
+use App\Models\Asset;
 use App\Livewire\Concerns\InteractsWithWorkspace;
 use App\Models\AssetType;
 use App\Support\ActivityLogger;
@@ -45,12 +46,15 @@ class Index extends Component
 
     public string $renewDate = '';
 
+    public string $renewPeriod = '';
+
     public function beginRenew(int $id): void
     {
         $asset = $this->workspace()->assets()->findOrFail($id);
         $this->renewingId = $asset->id;
         $this->renewingName = $asset->name;
-        $this->renewDate = ($asset->expires_at ?? now())->copy()->addYear()->toDateString();
+        $this->renewDate = $asset->nextRenewalDate()->toDateString();
+        $this->renewPeriod = Asset::renewalPeriodLabel($asset->renewal_months ?: 12);
         $this->showRenew = true;
     }
 

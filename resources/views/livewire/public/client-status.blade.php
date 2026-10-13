@@ -20,7 +20,7 @@
                 <div>
                     <div class="share-kicker">{{ __('app.share.provided', ['agency' => $agency]) }}</div>
                     <h1 class="share-client">{{ $clientName }}</h1>
-                    <div class="share-asof">{{ __('app.share.as_of', ['date' => now()->toDateString()]) }}</div>
+                    <div class="share-asof">{{ __('app.share.as_of', ['date' => \App\Support\DisplayDate::date(now())]) }}</div>
                 </div>
             </div>
         </header>
@@ -64,7 +64,7 @@
                         <div class="share-meta">
                             {{ $asset->assetType?->displayLabel() }}
                             @if ($asset->expires_at)
-                                · {{ $asset->expires_at->toDateString() }}
+                                · {{ \App\Support\DisplayDate::date($asset->expires_at) }}
                             @endif
                         </div>
                     </div>

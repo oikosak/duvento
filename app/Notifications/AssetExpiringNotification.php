@@ -31,7 +31,7 @@ class AssetExpiringNotification extends Notification implements ShouldQueue
             ->line(__('app.mail.expiring_line', [
                 'name' => $this->asset->name,
                 'type' => $this->asset->assetType?->displayLabel(),
-                'date' => $this->asset->expires_at?->toDateString(),
+                'date' => \App\Support\DisplayDate::date($this->asset->expires_at),
             ]))
             ->line(__('app.mail.expiring_client', ['client' => $this->asset->client?->name ?? __('app.common.empty')]))
             ->line(__('app.mail.expiring_days', ['days' => $days]))

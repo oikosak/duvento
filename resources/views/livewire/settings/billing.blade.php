@@ -9,7 +9,7 @@
             @if ($subscription)
                 <p class="mb-2">{{ __('app.billing.status') }} <code>{{ $subscription->status->value }}</code></p>
                 @if ($subscription->trial_ends_at)
-                    <p class="mb-2">{{ __('app.billing.trial_until') }} <code>{{ $subscription->trial_ends_at->toDateString() }}</code></p>
+                    <p class="mb-2">{{ __('app.billing.trial_until') }} <code>{{ \App\Support\DisplayDate::date($subscription->trial_ends_at) }}</code></p>
                 @endif
             @endif
             <p class="small text-muted mb-3">{{ __('app.billing.white_label') }}</p>
