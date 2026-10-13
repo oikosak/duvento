@@ -1,6 +1,6 @@
 @php
-    // The admin path is secret: only link to it for someone already signed in to the admin panel.
-    $showAdmin = auth('admin')->check();
+    // Admin links are always shown (owner's choice); they point to the configured ADMIN_PATH.
+    $showAdmin = true;
     $adminUrl = url(\App\Support\AdminPath::url());
 @endphp
 <x-layouts.guest :title="__('app.landing.title')">
