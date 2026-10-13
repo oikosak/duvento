@@ -123,6 +123,11 @@
   height: auto;
 }
 
+/* Searchable selects open their option list inside the wrapper; clipping it made the list unusable */
+.fi-panel-admin .fi-input-wrp:has(.fi-select-input) {
+  overflow: visible;
+}
+
 .fi-panel-admin .fi-input-wrp:focus-within {
   box-shadow: var(--ny-glow, 0 0 0 6px rgba(79, 127, 34, 0.18)) !important;
   outline: none !important;
