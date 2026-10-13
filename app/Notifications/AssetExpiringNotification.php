@@ -27,7 +27,7 @@ class AssetExpiringNotification extends Notification implements ShouldQueue
         $days = $this->asset->days_left;
 
         return (new MailMessage)
-            ->subject(__('app.mail.expiring_subject', ['name' => $this->asset->name, 'days' => $days]))
+            ->subject(trans_choice('app.mail.expiring_subject', $days, ['name' => $this->asset->name, 'days' => $days]))
             ->line(__('app.mail.expiring_line', [
                 'name' => $this->asset->name,
                 'type' => $this->asset->assetType?->displayLabel(),
@@ -35,6 +35,6 @@ class AssetExpiringNotification extends Notification implements ShouldQueue
             ]))
             ->line(__('app.mail.expiring_client', ['client' => $this->asset->client?->name ?? __('app.common.empty')]))
             ->line(__('app.mail.expiring_days', ['days' => $days]))
-            ->line(__('app.mail.expiring_before', ['days' => $this->daysBefore]));
+            ->line(trans_choice('app.mail.expiring_before', $this->daysBefore, ['days' => $this->daysBefore]));
     }
 }

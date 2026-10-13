@@ -137,7 +137,7 @@ final class ReminderDispatcher
             ]),
             __('app.mail.expiring_client', ['client' => $asset->client?->name ?? __('app.common.empty')]),
             __('app.mail.expiring_days', ['days' => $days]),
-            __('app.mail.expiring_before', ['days' => $daysBefore]),
+            trans_choice('app.mail.expiring_before', $daysBefore, ['days' => $daysBefore]),
         ])->implode("\n");
     }
 }
