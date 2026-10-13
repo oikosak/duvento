@@ -54,19 +54,6 @@
                 </div>
             </section>
 
-            <section class="landing-info">
-                <div>
-                    <i class="mdi mdi-server-outline"></i>
-                    <span>
-                        <strong>{{ __('app.landing.info_title') }}</strong>
-                        {{ __('app.landing.info_text') }}
-                    </span>
-                </div>
-                <a href="https://duvento.com" target="_blank" rel="noopener noreferrer">
-                    Duvento.com <i class="mdi mdi-open-in-new"></i>
-                </a>
-            </section>
-
             <footer class="app-footer">
                 <span>© {{ now()->year }} {{ __('app.brand') }}</span>
                 <span>{{ __('app.landing.footer_tagline') }}</span>
