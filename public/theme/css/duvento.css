@@ -1929,3 +1929,6 @@ html {
 
 /* Landing header: brand text was white on the light background */
 .landing-top .brand { color: var(--ny-heading); }
+
+/* Landing without hero: cards sit right under the header */
+.landing-top + .portal-section { border-top: 0; padding-top: 3rem; }
