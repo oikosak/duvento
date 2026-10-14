@@ -157,6 +157,19 @@
                             <x-ui.input :label="__('app.fields.asset_name')" wire:model="quickAssetName" />
                             @error('quickAssetName') <div class="invalid-feedback d-block mt-n3 mb-3">{{ $message }}</div> @enderror
                             <x-ui.input :label="__('app.fields.expires')" type="date" wire:model="quickExpiresAt" />
+                            <div class="row g-3">
+                                <div class="col-sm-6">
+                                    <x-ui.select :label="__('app.fields.renewal_period')" wire:model="quickRenewalMonths">
+                                        @foreach (\App\Models\Asset::RENEWAL_PERIODS as $months)
+                                            <option value="{{ $months }}">{{ \App\Models\Asset::renewalPeriodLabel($months) }}</option>
+                                        @endforeach
+                                    </x-ui.select>
+                                </div>
+                                <div class="col-sm-6">
+                                    <x-ui.input :label="__('app.fields.renewal_cost').' ('.$currencyCode.')'" type="number" min="0" step="0.01" wire:model="quickRenewalCost" />
+                                    @error('quickRenewalCost') <div class="invalid-feedback d-block mt-n3 mb-3">{{ $message }}</div> @enderror
+                                </div>
+                            </div>
                             <x-ui.button variant="accent" type="submit">{{ __('app.dashboard.add_asset') }}</x-ui.button>
                         </form>
                     @endif

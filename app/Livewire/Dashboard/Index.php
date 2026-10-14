@@ -7,6 +7,7 @@ use App\Enums\AssetPayer;
 use App\Enums\AssetStatus;
 use App\Enums\AutoRenew;
 use App\Livewire\Concerns\InteractsWithWorkspace;
+use App\Models\Asset;
 use App\Models\AssetType;
 use App\Rules\HttpWebsite;
 use App\Support\ActivityLogger;
@@ -50,6 +51,10 @@ class Index extends Component
     public ?int $quickAssetTypeId = null;
 
     public string $quickExpiresAt = '';
+
+    public int $quickRenewalMonths = 12;
+
+    public string $quickRenewalCost = '';
 
     public bool $showClientForm = false;
 
@@ -204,6 +209,8 @@ class Index extends Component
             'quickAssetTypeId' => ['required', Rule::exists('asset_types', 'id')],
             'quickAssetName' => ['required', 'string', 'max:255'],
             'quickExpiresAt' => ['nullable', 'date'],
+            'quickRenewalMonths' => ['required', 'integer', Rule::in(Asset::RENEWAL_PERIODS)],
+            'quickRenewalCost' => ['nullable', 'numeric', 'min:0'],
         ]);
 
         $guard->assertCanCreateAsset($workspace);
@@ -212,12 +219,15 @@ class Index extends Component
             'asset_type_id' => $validated['quickAssetTypeId'],
             'name' => $validated['quickAssetName'],
             'expires_at' => $validated['quickExpiresAt'] ?: null,
+            'renewal_months' => (int) $validated['quickRenewalMonths'],
+            'renewal_cost' => trim($this->quickRenewalCost) === '' ? null : $this->quickRenewalCost,
+            'currency' => $workspace->currencyCode(),
             'auto_renew' => AutoRenew::Unknown,
             'owner' => AssetOwner::Unknown,
             'payer' => AssetPayer::Unknown,
         ]);
         ActivityLogger::log($workspace, 'asset.created', $asset, ['name' => $asset->name]);
-        $this->reset(['quickAssetName', 'quickExpiresAt']);
+        $this->reset(['quickAssetName', 'quickExpiresAt', 'quickRenewalMonths', 'quickRenewalCost']);
         $this->toast(__('app.flash.asset_added'));
     }
 
@@ -255,6 +265,7 @@ class Index extends Component
                 ->sortBy(fn (AssetType $type) => mb_strtolower($type->displayLabel())),
             'pulseTotal' => max(1, $counts['ok'] + $counts['upcoming'] + $counts['urgent'] + $counts['critical']),
             'statusKeys' => AssetStatus::dashboardKeys(),
+            'currencyCode' => $workspace->currencyCode(),
         ])->title(__('app.titles.dashboard'));
     }
 }

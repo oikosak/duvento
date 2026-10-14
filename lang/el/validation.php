@@ -182,6 +182,8 @@ return [
         'quickAssetTypeId' => 'τύπος',
         'quickAssetName' => 'όνομα',
         'quickExpiresAt' => 'ημερομηνία λήξης',
+        'quickRenewalMonths' => 'διάρκεια ανανέωσης',
+        'quickRenewalCost' => 'κόστος ανανέωσης',
         'formClientId' => 'πελάτης',
         'assetTypeId' => 'τύπος',
         'assetName' => 'όνομα',

@@ -218,6 +218,8 @@ return [
         'quickAssetTypeId' => 'type',
         'quickAssetName' => 'name',
         'quickExpiresAt' => 'expiration date',
+        'quickRenewalMonths' => 'renewal period',
+        'quickRenewalCost' => 'renewal cost',
         'formClientId' => 'client',
         'assetTypeId' => 'type',
         'assetName' => 'name',
