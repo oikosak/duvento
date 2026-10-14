@@ -78,6 +78,7 @@
                         <th>{{ __('app.table.type') }}</th>
                         <th>{{ __('app.table.renews') }}</th>
                         <th>{{ __('app.table.pays') }}</th>
+                        <th class="text-nowrap">{{ __('app.table.cost') }}</th>
                         <th>{{ __('app.table.status') }}</th>
                         <th></th>
                     </tr>
@@ -103,6 +104,14 @@
                             </td>
                             <td class="text-muted">{{ $asset->owner->label() }}</td>
                             <td class="text-muted">{{ $asset->payer->label() }}</td>
+                            <td class="text-nowrap">
+                                @if ($asset->renewal_cost !== null)
+                                    <span class="fw-semibold">{{ \App\Support\UpcomingPayments::format($asset->currency ?: $asset->workspace->currencyCode(), $asset->renewal_cost) }}</span>
+                                    <span class="text-muted small">/ {{ \App\Models\Asset::renewalPeriodLabel($asset->renewal_months ?: 12) }}</span>
+                                @else
+                                    <span class="text-muted">{{ __('app.common.empty') }}</span>
+                                @endif
+                            </td>
                             <td>
                                 <span class="{{ $asset->status->badgeClass() }}">
                                     <span class="{{ $asset->status->dotClass() }} me-1"></span>
@@ -121,7 +130,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="8" class="ny-list-empty">
+                            <td colspan="9" class="ny-list-empty">
                                 {{ __('app.assets.empty') }}
                                 <a href="{{ route('assets.create') }}" class="btn btn-link p-0 align-baseline" wire:navigate>{{ __('app.common.add') }}</a>
                                 @if ($isOwner)

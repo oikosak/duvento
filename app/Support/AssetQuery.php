@@ -16,7 +16,7 @@ final class AssetQuery
         ?int $clientId = null,
         array $extra = [],
     ): Collection {
-        $query = $workspace->assets()->with(['client', 'assetType']);
+        $query = $workspace->assets()->with(['client', 'assetType', 'workspace']);
 
         if (filled($search)) {
             $query->where(function ($q) use ($search) {
