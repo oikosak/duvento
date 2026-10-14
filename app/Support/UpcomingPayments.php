@@ -184,7 +184,8 @@ final class UpcomingPayments
 
         return match ($currency) {
             'USD' => '$'.$value,
-            'EUR' => '€'.$value,
+            // Greek convention puts the euro sign after the amount: 150€
+            'EUR' => app()->getLocale() === 'el' ? $value.'€' : '€'.$value,
             'GBP' => '£'.$value,
             'RUB' => $value.' ₽',
             'UAH' => $value.' ₴',
