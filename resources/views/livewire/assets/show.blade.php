@@ -112,7 +112,7 @@
         <div class="list-group list-group-flush">
             @forelse ($logs as $log)
                 <div class="list-group-item">
-                    <div class="fw-semibold">{{ __('app.activity.actions.'.$log->action) }}</div>
+                    <div class="fw-semibold">{{ \App\Support\ActivityAction::label($log->action) }}</div>
                     <div class="small text-muted">
                         <code>{{ \App\Support\DisplayDate::dateTime($log->created_at) }}</code>
                         · {{ $log->user?->name ?? __('app.common.system') }}
