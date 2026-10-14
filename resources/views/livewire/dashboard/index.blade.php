@@ -235,9 +235,9 @@
                         <th>{{ __('app.table.asset') }}</th>
                         <th>{{ __('app.table.client') }}</th>
                         <th>{{ __('app.table.type') }}</th>
+                        <th class="text-nowrap">{{ __('app.table.cost') }}</th>
                         <th>{{ __('app.table.expires') }}</th>
                         @if ($cashflowOpen)
-                            <th>{{ __('app.table.cost') }}</th>
                             <th>{{ __('app.table.pays') }}</th>
                         @endif
                         <th>{{ __('app.table.status') }}</th>
@@ -256,13 +256,16 @@
                                 @endif
                             </td>
                             <td class="text-muted">{{ $asset->assetType?->displayLabel() }}</td>
+                            <td class="text-nowrap">
+                                @if ($asset->renewal_cost !== null)
+                                    <span class="fw-semibold">{{ \App\Support\UpcomingPayments::format($asset->currency ?: $currencyCode, $asset->renewal_cost) }}</span>
+                                    <span class="text-muted small">/ {{ \App\Models\Asset::renewalPeriodLabel($asset->renewal_months ?: 12) }}</span>
+                                @else
+                                    <span class="text-muted">{{ __('app.common.empty') }}</span>
+                                @endif
+                            </td>
                             <td><code>{{ \App\Support\DisplayDate::date($asset->expires_at) ?? __('app.common.empty') }}</code></td>
                             @if ($cashflowOpen)
-                                <td class="text-muted">
-                                    {{ $asset->renewal_cost === null
-                                        ? __('app.common.empty')
-                                        : \App\Support\UpcomingPayments::format($asset->currency ?: $cashflow['default_currency'], $asset->renewal_cost) }}
-                                </td>
                                 <td class="text-muted">{{ $asset->payer->label() }}</td>
                             @endif
                             <td>
@@ -274,7 +277,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="{{ $cashflowOpen ? 8 : 6 }}" class="ny-list-empty">
+                            <td colspan="{{ $cashflowOpen ? 8 : 7 }}" class="ny-list-empty">
                                 @if ($extras['assets'] === 0)
                                     {{ __('app.dashboard.empty_assets') }}
                                     <a href="{{ route('assets.create') }}" class="btn btn-link p-0 align-baseline" wire:navigate>{{ __('app.common.add') }}</a>
