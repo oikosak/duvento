@@ -176,9 +176,11 @@ final class UpcomingPayments
     public static function format(string $currency, int|float|string $amount): string
     {
         $currency = self::normalizeCurrency($currency);
-        $value = number_format((float) $amount, 2, '.', ' ');
+        // Greek: 1.234,50 — elsewhere: 1 234.50
+        [$decimal, $thousands] = app()->getLocale() === 'el' ? [',', '.'] : ['.', ' '];
+        $value = number_format((float) $amount, 2, $decimal, $thousands);
 
-        if (str_ends_with($value, '.00')) {
+        if (str_ends_with($value, $decimal.'00')) {
             $value = substr($value, 0, -3);
         }
 

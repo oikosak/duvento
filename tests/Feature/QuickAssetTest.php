@@ -59,7 +59,7 @@ class QuickAssetTest extends TestCase
             ->get(route('dashboard'))
             ->assertOk()
             ->assertSeeInOrder(['Τύπος', 'Κόστος', 'Λήξη'])
-            ->assertSee('24.60€')
+            ->assertSee('24,60€')
             ->assertSee('/ 2 έτη');
     }
 }

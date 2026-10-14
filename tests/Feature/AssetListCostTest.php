@@ -35,7 +35,7 @@ class AssetListCostTest extends TestCase
             ->get(route('assets'))
             ->assertOk()
             ->assertSee('Κόστος')
-            ->assertSee('24.60€')
+            ->assertSee('24,60€')
             ->assertSee('/ 2 έτη');
     }
 }
