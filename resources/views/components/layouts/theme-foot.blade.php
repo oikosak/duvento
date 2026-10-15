@@ -41,6 +41,14 @@
           if (input.value !== this.iso) this.syncFromInput();
         };
         input.addEventListener('input', sync);
+        // Livewire's wire:model fills the hidden input after this init() runs and
+        // without firing an input event, so a saved date never reached the display.
+        // Re-read once the children are initialised, and follow server-side changes.
+        this.$nextTick(sync);
+        const modelAttr = [...input.attributes].find((a) => a.name.startsWith('wire:model'));
+        if (modelAttr && this.$wire && typeof this.$wire.$watch === 'function') {
+          this.$wire.$watch(modelAttr.value, () => this.$nextTick(sync));
+        }
         this.$watch('open', (on) => {
           if (!on) return;
           this.panel = 'days';
