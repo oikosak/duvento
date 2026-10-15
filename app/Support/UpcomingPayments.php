@@ -11,7 +11,7 @@ final class UpcomingPayments
 {
     public const PERIODS = [7, 30, 90];
 
-    public const TREND_MONTHS = 6;
+    public const TREND_MONTHS = 12;
 
     public const CURRENCIES = ['USD', 'EUR', 'GBP', 'RUB', 'UAH', 'PLN', 'KZT', 'CZK'];
 
@@ -92,7 +92,7 @@ final class UpcomingPayments
      */
     public static function trend(Collection $assets, string $fallbackCurrency, int $months = self::TREND_MONTHS): array
     {
-        $months = max(3, min(6, $months));
+        $months = max(3, min(12, $months));
         $fallback = self::normalizeCurrency($fallbackCurrency);
         $from = now()->startOfDay();
         $origin = now()->startOfMonth();
@@ -115,23 +115,21 @@ final class UpcomingPayments
                 continue;
             }
 
-            $expires = $asset->expires_at->copy()->startOfDay();
-
-            if ($expires->lt($from) || $expires->gt($until)) {
-                continue;
-            }
-
-            $key = $expires->format('Y-m');
-
-            if (! isset($buckets[$key])) {
-                continue;
-            }
-
             $currency = self::normalizeCurrency($asset->currency ?: $fallback);
-            $buckets[$key]['by_currency'][$currency] = self::add(
-                $buckets[$key]['by_currency'][$currency] ?? '0',
-                (string) $asset->renewal_cost,
-            );
+
+            // Every renewal inside the window, so short periods (1–6 months) recur.
+            foreach (self::occurrences($asset, $from, $until) as $date) {
+                $key = $date->format('Y-m');
+
+                if (! isset($buckets[$key])) {
+                    continue;
+                }
+
+                $buckets[$key]['by_currency'][$currency] = self::add(
+                    $buckets[$key]['by_currency'][$currency] ?? '0',
+                    (string) $asset->renewal_cost,
+                );
+            }
         }
 
         $max = 0.0;
@@ -198,6 +196,32 @@ final class UpcomingPayments
         };
     }
 
+    /**
+     * Renewal dates of an asset between $from and $until (inclusive), following its renewal period.
+     *
+     * @return list<Carbon>
+     */
+    public static function occurrences(Asset $asset, Carbon $from, Carbon $until): array
+    {
+        if ($asset->expires_at === null) {
+            return [];
+        }
+
+        $months = max(1, (int) ($asset->renewal_months ?: 12));
+        $date = $asset->expires_at->copy()->startOfDay();
+        $dates = [];
+
+        while ($date->lte($until)) {
+            if ($date->gte($from)) {
+                $dates[] = $date->copy();
+            }
+
+            $date = $date->addMonthsNoOverflow($months);
+        }
+
+        return $dates;
+    }
+
     /** @param  array<string, string>  $totals */
     public static function join(array $totals, bool $skipZero = false): string
     {
@@ -221,7 +245,7 @@ final class UpcomingPayments
         return preg_match('/^[A-Z]{3}$/', $currency) === 1 ? $currency : 'USD';
     }
 
-    private static function add(string $left, string $right): string
+    public static function add(string $left, string $right): string
     {
         return number_format((float) $left + (float) $right, 2, '.', '');
     }

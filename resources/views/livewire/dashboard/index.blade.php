@@ -209,6 +209,44 @@
     </div>
 
     <div class="row g-3 mb-3">
+        <div class="col-12">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="stat-label mb-3">{{ __('app.portfolio.title') }}</div>
+                    <div class="row g-4">
+                        <div class="col-sm-6 col-xl-3">
+                            <div class="small text-muted">{{ __('app.portfolio.annual') }}</div>
+                            <div class="cashflow-amount">{{ $portfolio['annual_label'] ?: __('app.common.empty') }}</div>
+                            <div class="small text-muted mt-1">{{ __('app.portfolio.annual_hint') }}</div>
+                        </div>
+                        <div class="col-sm-6 col-xl-3">
+                            <div class="small text-muted">{{ __('app.portfolio.next12') }}</div>
+                            <div class="cashflow-amount">{{ $portfolio['next12_label'] ?: __('app.common.empty') }}</div>
+                            <div class="small text-muted mt-1">{{ trans_choice('app.portfolio.next12_hint', $portfolio['next12_count'], ['count' => $portfolio['next12_count']]) }}</div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="small text-muted mb-1">{{ __('app.portfolio.top_clients') }}</div>
+                            @forelse ($portfolio['top_clients'] as $row)
+                                <div class="d-flex justify-content-between gap-3 py-1 {{ $loop->last ? '' : 'border-bottom' }}">
+                                    <a href="{{ route('clients.show', $row['id']) }}" class="text-truncate" wire:navigate>{{ $row['name'] }}</a>
+                                    <span class="fw-semibold text-nowrap">{{ $row['label'] }} <span class="text-muted small fw-normal">{{ __('app.portfolio.per_year') }}</span></span>
+                                </div>
+                            @empty
+                                <div class="text-muted">{{ __('app.common.empty') }}</div>
+                            @endforelse
+                        </div>
+                    </div>
+                    @if ($portfolio['unpriced'] > 0)
+                        <div class="small text-muted mt-3">
+                            <i class="mdi mdi-information-outline me-1"></i>{{ trans_choice('app.portfolio.unpriced', $portfolio['unpriced'], ['count' => $portfolio['unpriced']]) }}
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-3">
         <div class="col-lg">
             <x-ui.input wire:model.live.debounce.300ms="search" placeholder="{{ __('app.filters.search_assets') }}" />
         </div>

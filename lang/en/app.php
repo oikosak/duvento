@@ -270,7 +270,7 @@ return [
         'client_pays' => 'Client pays :amount',
         'unknown_pays' => 'Payer unknown: :amount',
         'empty_hint' => 'Assets without a renewal cost are not included.',
-        'trend' => 'Renewals over the next 6 months',
+        'trend' => 'Renewals over the next 12 months',
     ],
 
     'onboarding' => [
@@ -782,5 +782,16 @@ return [
         'info_title' => 'Self-hosted edition',
         'info_text' => 'Free AGPLv3 software powered by PHP, MySQL or SQLite, and cron.',
         'footer_tagline' => 'Deadline tracking without the noise.',
+    ],
+
+    'portfolio' => [
+        'title' => 'Yearly overview',
+        'annual' => 'Yearly renewal value',
+        'annual_hint' => 'Multi-year renewals are spread per year.',
+        'next12' => 'Due in the next 12 months',
+        'next12_hint' => '{0} No renewals|{1} :count renewal|[2,*] :count renewals',
+        'top_clients' => 'Top clients by yearly value',
+        'per_year' => '/ year',
+        'unpriced' => '{1} :count asset has no renewal cost and is not included.|[2,*] :count assets have no renewal cost and are not included.',
     ],
 ];

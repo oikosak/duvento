@@ -14,6 +14,7 @@ use App\Support\ActivityLogger;
 use App\Support\AssetQuery;
 use App\Support\Onboarding;
 use App\Support\PlanGuard;
+use App\Support\PortfolioStats;
 use App\Support\UpcomingPayments;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
@@ -260,6 +261,7 @@ class Index extends Component
             'doneCount' => count($steps) - Onboarding::remaining($steps),
             'assets' => $assets,
             'cashflow' => $cashflow,
+            'portfolio' => PortfolioStats::summarize($workspace->assets()->with('client')->get(), $workspace->currencyCode()),
             'clients' => $clients,
             'types' => AssetType::query()->availableFor($workspace)->get()
                 ->sortBy(fn (AssetType $type) => mb_strtolower($type->displayLabel())),
