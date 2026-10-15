@@ -228,7 +228,8 @@ class Index extends Component
             'payer' => AssetPayer::Unknown,
         ]);
         ActivityLogger::log($workspace, 'asset.created', $asset, ['name' => $asset->name]);
-        $this->reset(['quickAssetName', 'quickExpiresAt', 'quickRenewalMonths', 'quickRenewalCost']);
+        // Keep the client for the next entry; the type must be picked again (domain → hosting…).
+        $this->reset(['quickAssetTypeId', 'quickAssetName', 'quickExpiresAt', 'quickRenewalMonths', 'quickRenewalCost']);
         $this->toast(__('app.flash.asset_added'));
     }
 

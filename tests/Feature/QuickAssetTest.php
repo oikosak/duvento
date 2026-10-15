@@ -34,7 +34,10 @@ class QuickAssetTest extends TestCase
             ->set('quickRenewalMonths', 24)
             ->set('quickRenewalCost', '24.60')
             ->call('saveQuickAsset')
-            ->assertHasNoErrors();
+            ->assertHasNoErrors()
+            ->assertSet('quickAssetClientId', $client->id)
+            ->assertSet('quickAssetTypeId', null)
+            ->assertSet('quickAssetName', '');
 
         $asset = $workspace->assets()->firstOrFail();
         $this->assertSame(24, $asset->renewal_months);
