@@ -117,55 +117,75 @@
         </div>
     </div>
 
-    <div class="row g-3 mb-3">
-        <div class="col-lg-6">
-            <div class="card h-100">
+    {{-- Inline @php only: a block @php here clashes with the inline @php($isOwner) above --}}
+    @php($quickErrors = $errors->hasAny(['quickClientName', 'quickClientEmail', 'quickAssetClientId', 'quickAssetTypeId', 'quickAssetName', 'quickExpiresAt', 'quickRenewalMonths', 'quickRenewalCost']))
+    <div class="mb-3" x-data="{ open: @js($quickErrors) }">
+        <button type="button" class="btn btn-outline-secondary btn-sm" @click="open = !open" :aria-expanded="open.toString()">
+            <i class="mdi" :class="open ? 'mdi-minus' : 'mdi-plus'"></i>
+            {{ __('app.dashboard.quick_add') }}
+        </button>
+
+        <div x-show="open" x-cloak x-transition.opacity.duration.150ms class="mt-3">
+            <div class="card mb-3">
                 <div class="card-header"><h5 class="mb-0">{{ __('app.dashboard.quick_client') }}</h5></div>
                 <div class="card-body">
-                    <form wire:submit="saveQuickClient">
-                        <x-ui.input :label="__('app.fields.name')" wire:model="quickClientName" />
-                        @error('quickClientName') <div class="invalid-feedback d-block mt-n3 mb-3">{{ $message }}</div> @enderror
-                        <x-ui.input :label="__('app.fields.email')" type="email" wire:model="quickClientEmail" />
-                        @error('quickClientEmail') <div class="invalid-feedback d-block mt-n3 mb-3">{{ $message }}</div> @enderror
-                        <x-ui.button variant="accent" type="submit">{{ __('app.dashboard.add_client') }}</x-ui.button>
+                    <form wire:submit="saveQuickClient" class="row g-3 align-items-end">
+                        <div class="col-md-5">
+                            <x-ui.input :label="__('app.fields.name')" wire:model="quickClientName" group-class="mb-0" />
+                            @error('quickClientName') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
+                        </div>
+                        <div class="col-md-4">
+                            <x-ui.input :label="__('app.fields.email')" type="email" wire:model="quickClientEmail" group-class="mb-0" />
+                            @error('quickClientEmail') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
+                        </div>
+                        <div class="col-md-3">
+                            <x-ui.button variant="accent" type="submit" class="w-100">{{ __('app.dashboard.add_client') }}</x-ui.button>
+                        </div>
                     </form>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="card h-100">
+
+            <div class="card">
                 <div class="card-header"><h5 class="mb-0">{{ __('app.dashboard.quick_asset') }}</h5></div>
                 <div class="card-body">
                     @if ($clients->isEmpty())
                         <p class="text-muted mb-0">{{ __('app.dashboard.need_client') }}</p>
                     @else
                         <form wire:submit="saveQuickAsset">
-                            <x-ui.select :label="__('app.fields.client')" wire:model="quickAssetClientId">
-                                <option value="">{{ __('app.common.select') }}</option>
-                                @foreach ($clients as $client)
-                                    <option value="{{ $client->id }}">{{ $client->name }}</option>
-                                @endforeach
-                            </x-ui.select>
-                            @error('quickAssetClientId') <div class="invalid-feedback d-block mt-n3 mb-3">{{ $message }}</div> @enderror
-                            <x-ui.select :label="__('app.fields.type')" wire:model="quickAssetTypeId">
-                                <option value="">{{ __('app.common.select') }}</option>
-                                @foreach ($types as $type)
-                                    <option value="{{ $type->id }}">{{ $type->displayLabel() }}</option>
-                                @endforeach
-                            </x-ui.select>
-                            @error('quickAssetTypeId') <div class="invalid-feedback d-block mt-n3 mb-3">{{ $message }}</div> @enderror
-                            <x-ui.input :label="__('app.fields.asset_name')" wire:model="quickAssetName" />
-                            @error('quickAssetName') <div class="invalid-feedback d-block mt-n3 mb-3">{{ $message }}</div> @enderror
-                            <x-ui.input :label="__('app.fields.expires')" type="date" wire:model="quickExpiresAt" />
                             <div class="row g-3">
-                                <div class="col-sm-6">
+                                <div class="col-md-4">
+                                    <x-ui.select :label="__('app.fields.client')" wire:model="quickAssetClientId">
+                                        <option value="">{{ __('app.common.select') }}</option>
+                                        @foreach ($clients as $client)
+                                            <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                        @endforeach
+                                    </x-ui.select>
+                                    @error('quickAssetClientId') <div class="invalid-feedback d-block mt-n3 mb-3">{{ $message }}</div> @enderror
+                                </div>
+                                <div class="col-md-4">
+                                    <x-ui.select :label="__('app.fields.type')" wire:model="quickAssetTypeId">
+                                        <option value="">{{ __('app.common.select') }}</option>
+                                        @foreach ($types as $type)
+                                            <option value="{{ $type->id }}">{{ $type->displayLabel() }}</option>
+                                        @endforeach
+                                    </x-ui.select>
+                                    @error('quickAssetTypeId') <div class="invalid-feedback d-block mt-n3 mb-3">{{ $message }}</div> @enderror
+                                </div>
+                                <div class="col-md-4">
+                                    <x-ui.input :label="__('app.fields.asset_name')" wire:model="quickAssetName" />
+                                    @error('quickAssetName') <div class="invalid-feedback d-block mt-n3 mb-3">{{ $message }}</div> @enderror
+                                </div>
+                                <div class="col-md-4">
+                                    <x-ui.input :label="__('app.fields.expires')" type="date" wire:model="quickExpiresAt" />
+                                </div>
+                                <div class="col-md-4">
                                     <x-ui.select :label="__('app.fields.renewal_period')" wire:model="quickRenewalMonths">
                                         @foreach (\App\Models\Asset::RENEWAL_PERIODS as $months)
                                             <option value="{{ $months }}">{{ \App\Models\Asset::renewalPeriodLabel($months) }}</option>
                                         @endforeach
                                     </x-ui.select>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-md-4">
                                     <x-ui.input :label="__('app.fields.renewal_cost').' ('.$currencyCode.')'" type="number" min="0" step="0.01" wire:model="quickRenewalCost" />
                                     @error('quickRenewalCost') <div class="invalid-feedback d-block mt-n3 mb-3">{{ $message }}</div> @enderror
                                 </div>

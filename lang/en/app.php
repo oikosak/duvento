@@ -252,6 +252,7 @@ return [
         'unknown_owner_hint' => 'unclear who renews',
         'pulse' => 'Deadline pulse',
         'pulse_hint' => 'assets with a date · :critical critical in the next 7 days',
+        'quick_add' => 'Quick add',
         'quick_client' => 'Quick client',
         'quick_asset' => 'Quick asset',
         'add_client' => 'Add client',
