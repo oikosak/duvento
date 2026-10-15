@@ -198,6 +198,7 @@ class Show extends Component
         return view('livewire.clients.show', [
             'client' => $client,
             'assets' => $assets,
+            'currencyCode' => $this->workspace()->currencyCode(),
             'worstStatus' => $worst?->status ?? AssetStatus::Unknown,
             'highRisk' => $highRisk,
             'upcoming' => $assets->filter(fn ($asset) => $asset->status === AssetStatus::Upcoming)->count(),
