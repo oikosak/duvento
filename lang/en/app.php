@@ -505,6 +505,8 @@ return [
         'submit' => 'Import',
         'loading' => 'Importing…',
         'read_failed' => 'Could not read the CSV.',
+        'looks_like_assets' => 'This file looks like an assets file (it has type / client / expires_at columns). Choose “Assets” under “What to import”.',
+        'looks_like_clients' => 'This file has no client column, so it does not look like an assets file. For clients choose “Clients” under “What to import”.',
     ],
 
     'team' => [

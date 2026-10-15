@@ -5,6 +5,7 @@ namespace App\Support;
 use App\Models\AssetType;
 use App\Models\Workspace;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Validation\ValidationException;
 use RuntimeException;
 
 final class CsvImporter
@@ -13,6 +14,11 @@ final class CsvImporter
     {
         $rows = $this->rows($file);
         $created = 0;
+
+        // An assets file uploaded as clients would turn every domain into a client.
+        if ($this->hasAnyColumn($rows, ['type', 'тип', 'expires_at', 'истекает', 'client', 'client_id', 'клиент'])) {
+            throw ValidationException::withMessages(['file' => __('app.import.looks_like_assets')]);
+        }
 
         foreach ($rows as $row) {
             $name = trim((string) ($row['name'] ?? $row['имя'] ?? ''));
@@ -41,6 +47,10 @@ final class CsvImporter
         $rows = $this->rows($file);
         $created = 0;
         $types = AssetType::query()->availableFor($workspace)->get();
+
+        if ($rows !== [] && ! $this->hasAnyColumn($rows, ['client', 'client_id', 'client_name', 'клиент'])) {
+            throw ValidationException::withMessages(['file' => __('app.import.looks_like_clients')]);
+        }
 
         foreach ($rows as $row) {
             $name = trim((string) ($row['name'] ?? $row['название'] ?? ''));
@@ -84,6 +94,14 @@ final class CsvImporter
         $months = (int) trim((string) $value);
 
         return in_array($months, \App\Models\Asset::RENEWAL_PERIODS, true) ? $months : 12;
+    }
+
+    /** @param  list<array<string, mixed>>  $rows */
+    private function hasAnyColumn(array $rows, array $columns): bool
+    {
+        $header = array_keys($rows[0] ?? []);
+
+        return array_intersect($header, $columns) !== [];
     }
 
     private function rows(UploadedFile $file): array
